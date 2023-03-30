@@ -1,0 +1,46 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<script src="{{ url_for('static', filename='src.js') }}"></script>
+<body>
+  <div class="background">
+    <div class="center-container">
+      <div class="center">
+        <div class="content-container">
+          <p class="title">
+            LIGHT EFFECTS
+          </p> 
+          <div>
+          <select class="effect-select" id="effect-select" onchange="changeEffect()">
+            <option value="">Select Effect:</option>
+            <option value="rainbow">Rainbow</option>
+            <option value="static">Static Color</option>
+          </select>
+        </div>
+        <span class="slider-bar">
+          <p class="inner">
+            Speed:
+          </p>
+          <div class="slider-container inner">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+          </div>
+          <p class="inner">
+            Speed:
+          </p>
+          <div class="slider-container inner">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+          </div>
+        </span>
+          
+      </div>
+    </div>
+    
+  </div>
+</body>
+
+</html>
+
+
