@@ -1,10 +1,14 @@
- 
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='src.js') }}"></script>
+  <script> 
+    var effectsList = JSON.parse('{{ effects_string | tojson | safe}}');
+    console.log(effectsList)
+  </script>
 </head>
-<script src="{{ url_for('static', filename='src.js') }}"></script>
 <body>
   <div class="background">
     <div class="center-container">
@@ -12,35 +16,36 @@
         <div class="content-container">
           <p class="title">
             LIGHT EFFECTS
-          </p> 
+          </p>
           <div>
-          <select class="effect-select" id="effect-select" onchange="changeEffect()">
-            <option value="">Select Effect:</option>
-            <option value="rainbow">Rainbow</option>
-            <option value="static">Static Color</option>
-          </select>
+            <select class="effect-select" id="effect-select" onchange="changeEffect()">
+              {%for i in range(0, len)%}
+                <option value="{{effects_keys[i]}}">{{effects[effects_keys[i]]['display']}}</li>
+              {%endfor%}
+            </select>
+          </div>
+          <span class="slider-bar">
+            <div class="slider-container">
+              <p>
+                Speed:
+              </p>
+              <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            </div>
+
+            <div class="slider-container">
+              <p>
+                Speed:
+              </p>
+              <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            </div>
+          </span>
+          <div>
+            <input type="color" class="color-input">
+          </div>
         </div>
-        <span class="slider-bar">
-          <p class="inner">
-            Speed:
-          </p>
-          <div class="slider-container inner">
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-          </div>
-          <p class="inner">
-            Speed:
-          </p>
-          <div class="slider-container inner">
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-          </div>
-        </span>
-          
       </div>
     </div>
-    
   </div>
 </body>
 
 </html>
-
-
