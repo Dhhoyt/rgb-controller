@@ -22,7 +22,7 @@ def static(pixels, our_state):
     pixels.fill(our_state['color'])
     time.sleep(100)
 
-def start_lighting():
+async def start_lighting():
     pixels = neopixel.NeoPixel(board.D12, 146)
     while True:
         print("jee")

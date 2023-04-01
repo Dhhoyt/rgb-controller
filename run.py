@@ -3,7 +3,6 @@ from threading import Thread
 
 app = create_app()
 
-lighting_thread = Thread(target = lambda: lighting_effects.start_lighting())
-lighting_thread.start()
+lighting_effects.start_lighting()
 
 app.run(host="0.0.0.0", port=8080)
