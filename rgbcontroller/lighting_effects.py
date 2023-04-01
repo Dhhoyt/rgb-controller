@@ -13,12 +13,14 @@ def lerp_color(color1, color2, k):
 
 def off(pixels, our_state):
     pixels.fill((0, 0, 0))
+    time.sleep(100)
 
 def rainbow(pixels, our_state):
     pass
 
 def static(pixels, our_state):
     pixels.fill(our_state['color'])
+    time.sleep(100)
 
 def start_lighting():
     pixels = neopixel.NeoPixel(board.D12, 146)
@@ -29,8 +31,8 @@ def start_lighting():
             our_state = copy.deepcopy(state)
             our_state['color'] = ImageColor.getcolor(state['color'], "RGB")
         effect = effects[our_state['current_effect']]
-        print(effect)
-        time.sleep(100)
+        effect['function'](pixels, our_state)
+
 
 effects = {
     "off": {
