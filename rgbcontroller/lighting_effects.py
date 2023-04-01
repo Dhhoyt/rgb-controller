@@ -28,7 +28,7 @@ def start_lighting():
             our_state = dict(state)
             our_state['color'] = ImageColor.getcolor(state['color'], "RGB")
         effect = effects[our_state['current_effect']]
-        effect['function'](pixels, our_state)
+        print(effect)
 
 effects = {
     "off": {
