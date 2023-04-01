@@ -29,6 +29,7 @@ def start_lighting():
             our_state['color'] = ImageColor.getcolor(state['color'], "RGB")
         effect = effects[our_state['current_effect']]
         print(effect)
+        sleep(100)
 
 effects = {
     "off": {
