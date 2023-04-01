@@ -25,7 +25,7 @@ def start_lighting():
         print("jee")
         our_state = {}
         with state_lock:
-            our_state = state.clone()
+            our_state = state.copy()
             our_state['color'] = ImageColor.getcolor(state['color'], "RGB")
         effect = effects[our_state['current_effect']]
         print(effect)
@@ -49,7 +49,7 @@ effects = {
 }
 
 
-effects_list = effects.clone()
+effects_list = effects.copy()
 for i in effects_list:
     effects_list[i].pop('function', None)
 
