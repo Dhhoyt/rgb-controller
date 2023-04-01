@@ -10,6 +10,6 @@ def create_app():
 
     app.register_blueprint(main)
 
-    socketio.init_app(app)
+    socketio.init_app(app, async_mode='gevent')
 
     return app
