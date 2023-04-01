@@ -1,0 +1,7 @@
+pillow
+flask
+flask_socketio
+regex
+rpi_ws281x
+adafruit-circuitpython-neopixel
+adafruit-blinka

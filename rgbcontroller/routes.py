@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
-from .state import effects_list, state
+from .state import state
+from .lighting_effects import effects_list 
 
 main = Blueprint("main", __name__)
 

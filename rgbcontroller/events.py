@@ -1,7 +1,8 @@
 from flask import request
 from flask_socketio import emit
 from .extensions import socketio
-from .state import state, state_lock, effects_list
+from .state import state, state_lock
+from .lighting_effects import effects_list
 import regex as re
 import json
 
