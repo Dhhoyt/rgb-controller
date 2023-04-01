@@ -1,12 +1,18 @@
 #!/bin/python3
 
 from flask import Flask, render_template, jsonify, request
-from threading import Thread
+from threading import Thread, Lock
 import time
 import lighting_effects as le
 import json
 
-current_effect = 0
+state = {
+    "current_effect": "off",
+    "speed": 0,
+    "brightness": 0,
+}
+
+state_lock = Lock()
 
 app = Flask(__name__)
 
@@ -19,13 +25,25 @@ print(json.dumps(effects_list))
 
 @app.route("/")
 def index():
-    print(le.effects.keys())
-    return render_template("index.html", len = len(le.effects), effects_keys = list(le.effects.keys()), effects = le.effects, effects_string = effects_list)
+    return render_template("index.html", len = len(le.effects), effects_keys = list(le.effects.keys()), effects = le.effects, effects_config = effects_list, state=state)
 
 @app.route("/set_effect", methods=['POST'])
 def set_effect():
-    effect_json = request.get_json()    
-    return '',204
+    with state_lock:
+        effect_json: dict = request.get_json()
+        if "effect" in effect_json:
+            effect_name = effect_json['effect']
+            if effect_name in effects_list:
+                state['current_effect'] = effect_name
+                return '',204
+            else:
+                return f"Effect {effect_name} not a valid effect name.",400
+        return '',204
+
+@app.route("/state", methods=['GET'])
+def get_state():
+    with state_lock:
+        return jsonify(state)
 
 def start_lights():
     while True:

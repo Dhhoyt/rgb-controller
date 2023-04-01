@@ -39,7 +39,7 @@ p {
   width: calc(100% - 3rem);
   border-radius: 2rem;
   box-shadow: 1rem 1rem 1rem #111519a2;
-  min-height: calc(100% - 3rem);;
+  min-height: calc(100% - 3rem);
 }
 
 .center-container {
@@ -134,5 +134,20 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .color-input {
-  justify-self: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 15rem;
+  height: 15rem;
+  border: none;
+  cursor: pointer;
+}
+.color-input::-webkit-color-swatch {
+  border-radius: 50%;
+  border: 7px solid #2B3439;
+}
+.color-input::-moz-color-swatch {
+  border-radius: 50%;
+  border: 7px solid #2B3439;
 }

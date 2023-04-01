@@ -3,12 +3,8 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-  <script src="{{ url_for('static', filename='src.js') }}"></script>
-  <script> 
-    var effectsList = JSON.parse('{{ effects_string | tojson | safe}}');
-    console.log(effectsList)
-  </script>
 </head>
+
 <body>
   <div class="background">
     <div class="center-container">
@@ -20,8 +16,8 @@
           <div>
             <select class="effect-select" id="effect-select" onchange="changeEffect()">
               {%for i in range(0, len)%}
-                <option value="{{effects_keys[i]}}">{{effects[effects_keys[i]]['display']}}</li>
-              {%endfor%}
+              <option value="{{effects_keys[i]}}">{{effects[effects_keys[i]]['display']}}</li>
+                {%endfor%}
             </select>
           </div>
           <span class="slider-bar">
@@ -29,14 +25,14 @@
               <p>
                 Speed:
               </p>
-              <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+              <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">
             </div>
 
             <div class="slider-container">
               <p>
                 Speed:
               </p>
-              <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+              <input type="range" min="1" max="100" value="50" class="slider" id="brightness-slider">
             </div>
           </span>
           <div>
@@ -47,5 +43,37 @@
     </div>
   </div>
 </body>
+<script>
 
+  var effectsList = JSON.parse('{{ effects_config | tojson | safe }}');
+  var state = JSON.parse('{{ state | tojson | safe }}');
+  updateState()
+
+  function updateState() {
+    var sel = document.getElementById("effect-select");
+    var opts = sel.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+      if (opt.value == state['current_effect']) {
+        sel.selectedIndex = j;
+        break;
+      }
+    }
+    console.log("je")
+  }
+
+  function changeEffect() {
+    var x = document.getElementById("effect-select").value;
+    fetch("/set_effect", {
+      method: "POST",
+      body: JSON.stringify({
+        effect: x
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+    })
+  }
+
+  
+</script>
 </html>
