@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+  <title>Light Strip Controller</title>
+</head>
+
+<body>
+  <div class="background">
+    <div class="center-container">
+      <div class="center">
+        <div class="content-container">
+          <p class="title">
+            LIGHT EFFECTS
+          </p>
+          <div>
+            <select class="effect-select" id="effect-select" onchange="changeSetting('effect', 'effect-select')">
+              {%for i in range(0, len)%}
+              <option value="{{effects_keys[i]}}">{{effects[effects_keys[i]]['display']}}</li>
+                {%endfor%}
+            </select>
+          </div>
+          <span class="slider-bar">
+            <div class="slider-container">
+              <p>
+                Speed:
+              </p>
+              <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider"
+                onchange="changeSetting('speed', 'speed-slider')">
+            </div>
+
+            <div class="slider-container">
+              <p>
+                Brightness:
+              </p>
+              <input type="range" min="1" max="100" value="50" class="slider" id="brightness-slider"
+                onchange="changeSetting('brightness', 'brightness-slider')">
+            </div>
+          </span>
+          <div>
+            <input type="color" class="color-input" id="color-input" onchange="changeSetting('color', 'color-input')">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+
+  var effectsList = JSON.parse('{{ effects | tojson | safe }}');
+  var state = JSON.parse('{{ state | tojson | safe }}');
+
+  const socket = io();
+
+  socket.on("state_changed", function(data) {
+    state = data;
+    applyState()
+  })
+
+  applyState()
+
+  function applyState() {
+    var sel = document.getElementById("effect-select");
+    var opts = sel.options;
+    for (var opt, j = 0; opt = opts[j]; j++) {
+      if (opt.value == state['current_effect']) {
+        sel.selectedIndex = j;
+        break;
+      }
+    }
+
+    console.log(state.speed)
+    document.getElementById("speed-slider").value = state.speed;
+    document.getElementById("brightness-slider").value = state.brightness;
+    document.getElementById("color-input").value = state.color;
+  }
+
+  function changeSetting(element, id) {
+    var newEffect = document.getElementById(id).value;
+    socket.emit("change_state", JSON.stringify({
+        [element]: newEffect
+      }))
+  }
+
+
+</script>
+
+</html>
