@@ -6,4 +6,5 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
+    print(effects_list.keys())
     return render_template("index.html", len = len(effects_list), effects_keys = list(effects_list.keys()), effects = effects_list, state=state)
