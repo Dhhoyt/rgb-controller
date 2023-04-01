@@ -3,6 +3,7 @@ from .state import state_lock, state
 import time
 import board
 import neopixel
+import copy
 
 def lerp_color(color1, color2, k):
     r = color1[0] * k + color2[0] * (1 - k)
@@ -25,7 +26,7 @@ def start_lighting():
         print("jee")
         our_state = {}
         with state_lock:
-            our_state = state.copy()
+            our_state = copy.deepcopy(state)
             our_state['color'] = ImageColor.getcolor(state['color'], "RGB")
         effect = effects[our_state['current_effect']]
         print(effect)
@@ -50,7 +51,7 @@ effects = {
 }
 
 
-effects_list = effects.copy()
+effects_list = copy.deepcopy(effects)
 for i in effects_list:
     effects_list[i].pop('function', None)
 
