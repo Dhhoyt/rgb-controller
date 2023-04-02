@@ -11,5 +11,6 @@ def create_app():
     app.register_blueprint(main)
 
     socketio = SocketIO(app, async_mode='gevent')
-
     socketio.run(app)
+
+    print("running app :3")
