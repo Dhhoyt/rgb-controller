@@ -1,8 +1,7 @@
 from flask import Flask 
-from flask_socketio import SocketIO 
-
 from .events import socketio
 from .routes import main 
+from flask_socketio import SocketIO
 
 def create_app():
     app = Flask(__name__)
@@ -11,4 +10,6 @@ def create_app():
 
     app.register_blueprint(main)
 
-    socketio.run(app, async_mode='gevent', host="0.0.0.0", port=8080)
+    socketio = SocketIO(app, async_mode='gevent')
+
+    socketio.run(app)
