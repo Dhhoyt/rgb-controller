@@ -12,14 +12,14 @@ def lerp_color(color1, color2, k):
     b = color1[2] * k + color2[2] * (1 - k)
     return (r,g,b)
 
-def off(pixels, our_state):
+async def off(pixels, our_state):
     pixels.fill((0, 0, 0))
     await asyncio.sleep(10)
 
-def rainbow(pixels, our_state):
+async def rainbow(pixels, our_state):
     pass
 
-def static(pixels, our_state):
+async def static(pixels, our_state):
     pixels.fill(our_state['color'])
     await asyncio.sleep(10)
 
