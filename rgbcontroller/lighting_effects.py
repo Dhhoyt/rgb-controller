@@ -4,6 +4,7 @@ import time
 import board
 import neopixel
 import copy
+import asyncio
 
 def lerp_color(color1, color2, k):
     r = color1[0] * k + color2[0] * (1 - k)
@@ -13,14 +14,14 @@ def lerp_color(color1, color2, k):
 
 def off(pixels, our_state):
     pixels.fill((0, 0, 0))
-    time.sleep(100)
+    await asyncio.sleep(10)
 
 def rainbow(pixels, our_state):
     pass
 
 def static(pixels, our_state):
     pixels.fill(our_state['color'])
-    time.sleep(100)
+    await asyncio.sleep(10)
 
 async def start_lighting():
     pixels = neopixel.NeoPixel(board.D12, 146)
